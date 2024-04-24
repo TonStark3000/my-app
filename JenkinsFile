@@ -1,0 +1,35 @@
+pipeline{
+    agent any
+    tools{
+        maven 'maven-3.9'
+    }
+        stages{
+            stage("Git-Checkout"){
+                steps{
+                    git 'https://github.com/javahometech/my-app'
+                }
+            }
+              stage("maven-build"){
+                steps{
+                     sh "mvn clean package"
+                     sh "mv target/myweb*.war target/myweb.war"
+                }
+            }
+            stage("Deploy into tomcat"){
+                steps{
+                     sshagent(['Dev-TomcatP']) {
+                        sh "scp -o StrictHostKeyChecking=no target/myweb.war  ec2-user@172.31.43.147:/opt/tomcat-9/webapps/" 
+                        
+                     }
+                }
+            }
+        }
+        post{
+            always{
+                cleanWs()
+            }
+        }
+}
+        
+    
+    
