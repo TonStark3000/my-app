@@ -1,3 +1,4 @@
+@Library('my-libs')
 pipeline{
     agent any
     tools{
