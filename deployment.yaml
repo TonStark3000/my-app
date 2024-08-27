@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: masthan14/myapp1:${DOCKER_TAG} # Assuming this is your custom image with Tomcat
+        image: masthan14/myapp1:latest # Assuming this is your custom image with Tomcat
         ports:
         - containerPort: 8080
